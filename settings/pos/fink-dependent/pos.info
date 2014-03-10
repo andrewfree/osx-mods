@@ -1,0 +1,64 @@
+Package: pos
+Version: 1.0
+Revision: 1
+Source: http://kerbaugh.uncfsu.edu/%n.tgz
+SourceDirectory: ../.
+Source-MD5: 961f53c24f2000fbd24c50694652b747 
+License: Public Domain
+Maintainer: Gary Kerbaugh email@address.whatever
+Description: finder-terminal 2-way interaction scripts
+CompileScript:<<
+<<
+InstallScript:<<
+#!/bin/zsh -f
+cd %p/src/pos-1.0-1
+mkdir -p %i/bin
+mkdir -p %i/etc
+mkdir -p %i/etc/profile.d
+cp bin/fdc %i/bin
+cp bin/posd %i/bin
+sed  s/"\~"/"\%p"/g functions  > %i/etc/profile.d/pos.sh
+l1='set tposd="`%p/bin/posd`"'
+l3='setposd; cd "$tposd";pwd'
+print "alias setposd \'$l1\' "   > %i/etc/profile.d/pos.csh
+print setposd                   >> %i/etc/profile.d/pos.csh
+print "alias cdf \'$l3\' "      >> %i/etc/profile.d/pos.csh
+l4='find "`%p/bin/posd`" -name "*\\!*"\* '
+l5='grep -iIrn "\\!*" "`/sw/bin/posd`" '
+print "alias posfind \'$l4\' "      >> %i/etc/profile.d/pos.csh
+print "alias posgrep \'$l5\' "      >> %i/etc/profile.d/pos.csh
+chmod a+x %i/etc/profile.d/pos.*sh
+<<
+DescDetail: << 
+
+cdf and posd:
+
+posd is an osascript embedded in a shell script that returns the pwd
+corresponding to the frontmost finder window.  Its real value is when
+aliased to the command cdf, i.e., cdf='cd "$(/sw/bin/posd)"'.  The command
+cdf changes the terminal pwd to match that of the frontmost finder window.
+
+fdc: 
+
+fdc is essentially the reciprocal operation of cdf.  It changes the finder window to match the pwd of the terminal in which the command is issued.
+
+A further powerful use of posd is in conjunction with a posd.term file that is
+created from saving an open terminal session after setting all defaults to the prefered state.  Then change the lines in the new posd.term
+
+     <key>ExecutionString</key> 
+     <string></string> 
+
+to the following for a tcsh terminal session:
+
+    <key>ExecutionString</key> 
+    <string>cd "`/sw/bin/posd`"; pwd </string> 
+
+or to the following for a zsh or bash session:
+
+    <key>ExecutionString</key>
+    <string>cd "$(/sw/bin/posd)";pwd</string>
+
+
+and the resulting file is a clickable icon that can be placed in the finder 
+tool bar.  Clicking opens a new terminal window corresponding to the finder.
+<<
