@@ -1,0 +1,2 @@
+# Suck minimize effect for windows (fastest)
+defaults write com.apple.dock mineffect -string suck
