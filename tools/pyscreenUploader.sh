@@ -1,4 +1,5 @@
 #!/bin/bash
+# This is needed too https://code.google.com/p/imgur-cli/
 # Build into an app with platypus and it will take a screenshot and automatically upload to imgur (you need imgur.py code)
 name="Screen Shot $(date '+%m-%d') at$(date '+%l.%M.%S').png"
 cap=$(screencapture -i "/Users/rever/Dropbox/Screenshots/$name")
