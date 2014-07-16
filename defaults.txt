@@ -1,0 +1,12 @@
+defaults write com.googlecode.iterm2 HotkeyTermAnimationDuration -float 0.00001
+
+fix item animation speed for hotkey in item
+
+Super Fast Mission Control Animations
+If you want extremely fast animations, this is your defaults write command:
+
+defaults write com.apple.dock expose-animation-duration -float 0.1
+
+Again, kill the Dock for changes to take effect:
+
+killall Dock
